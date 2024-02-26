@@ -45,7 +45,6 @@ pub fn lookup_modif(name: &Token, data: &Everything, warn: Option<Severity>) -> 
         }
     }
 
-
     // $Price$_cost_modifier
     if let Some(part) = name_lc.strip_suffix("_cost_modifier") {
         maybe_warn(Item::Price, part, name, data, warn);
