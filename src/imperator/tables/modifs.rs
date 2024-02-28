@@ -45,6 +45,17 @@ pub fn lookup_modif(name: &Token, data: &Everything, warn: Option<Severity>) -> 
         }
     }
 
+    // culture_$PopType$_output
+    // culture_$PopType$_happiness
+    if let Some(part) = name_lc.strip_prefix("culture_") {
+        for sfx in &["_output", "_happiness"] {
+            if let Some(part) = part.strip_suffix(sfx) {
+                maybe_warn(Item::PopType, part, name, data, warn);
+                return Some(ModifKinds::Country);
+            }
+        }
+    }
+
     // $Price$_cost_modifier
     if let Some(part) = name_lc.strip_suffix("_cost_modifier") {
         maybe_warn(Item::Price, part, name, data, warn);
