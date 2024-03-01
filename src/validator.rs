@@ -520,6 +520,7 @@ impl<'a> Validator<'a> {
     /// Accept at most 5 decimals. (5 decimals is the limit accepted by the game engine in most contexts).
     /// Expect no more than one `name` field.
     /// Returns true iff the field is present.
+    #[cfg(not(feature = "imperator"))]
     pub fn field_numeric_range<R: RangeBounds<f64>>(&mut self, name: &str, range: R) {
         let sev = Severity::Error.at_most(self.max_severity);
         self.field_check(name, |_, bv| {
@@ -602,6 +603,7 @@ impl<'a> Validator<'a> {
     /// to be used for the `root` of a `ScopeContext` that is made on the spot. This is a convenient way to associate the
     /// `root` type with the key of this field, for clearer warnings. A passed-in `ScopeContext` would have to be associated
     /// with a key that is further away.
+    #[cfg(not(feature = "imperator"))]
     pub fn field_script_value_rooted(&mut self, name: &str, scopes: Scopes) -> bool {
         self.field_check(name, |key, bv| {
             let mut sc = ScopeContext::new(scopes, key);
@@ -643,6 +645,7 @@ impl<'a> Validator<'a> {
     }
 
     /// Just like [`Validator::field_script_value`], but it can accept a literal `flag:something` value as well as a script value.
+    #[cfg(not(feature = "imperator"))]
     pub fn field_script_value_or_flag(&mut self, name: &str, sc: &mut ScopeContext) -> bool {
         self.field_check(name, |_, bv| {
             // TODO: pass max_severity value down
@@ -1225,6 +1228,7 @@ impl<'a> Validator<'a> {
 
     /// If `name` is present in the block, emit a low-severity warning together with the helpful message `msg`.
     /// This is for harmless but unneeded fields.
+    #[cfg(not(feature = "imperator"))]
     pub fn advice_field(&mut self, name: &str, msg: &str) {
         if let Some(key) = self.block.get_key(name) {
             self.known_fields.push(key.as_str());

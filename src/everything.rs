@@ -641,6 +641,7 @@ impl Everything {
             Item::Dlc => DLC_IMPERATOR.contains(&key),
             Item::Event => self.events_imperator.exists(key),
             Item::EventNamespace => self.events_imperator.namespace_exists(key),
+            Item::Province => self.provinces_imperator.exists(key),
             Item::Sound => {
                 if let Some(filename) = key.strip_prefix("file://") {
                     self.fileset.exists(filename)
@@ -913,6 +914,7 @@ impl Everything {
         match itype {
             Item::Event => Box::new(self.events_imperator.iter_keys()),
             Item::EventNamespace => Box::new(self.events_imperator.iter_namespace_keys()),
+            Item::Province => Box::new(self.provinces_imperator.iter_keys()),
             _ => Box::new(self.database.iter_keys(itype)),
         }
     }
