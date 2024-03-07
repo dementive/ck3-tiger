@@ -101,6 +101,8 @@ pub fn lookup_modif(name: &Token, data: &Everything, warn: Option<Severity>) -> 
     if let Some(part) = name_lc.strip_suffix("_combat_bonus") {
         // This is tricky because both Unit and Terrain can have `_` in them.
         // Try each possible separation point in turn.
+        // TODO - This is throwing a false positive for "desert_hills_combat_bonus", but not sure how to fix right now
+        // Both "desert" and "hills" are terrain types...so it is matching hills as terrain and expecting desert to be a unit...
         for (i, _) in part.rmatch_indices('_') {
             if data.item_exists(Item::Terrain, &part[i + 1..]) {
                 // If the Terrain exists, then the prefix must be the Unit.
