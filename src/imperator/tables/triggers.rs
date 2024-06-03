@@ -255,7 +255,7 @@ const TRIGGER: &[(Scopes, &str, Trigger)] = &[
     (Scopes::Pop, "pop_hapiness", CompareValue),
     (Scopes::Pop, "pop_religion", ScopeOrItem(Scopes::Religion, Item::Religion)),
     (Scopes::Pop, "pop_type", Item(Item::PopType)),
-    (Scopes::Pop, "is_pop_type_right", Item(Item::PopType)),
+    (Scopes::Pop.union(Scopes::CountryCulture), "is_pop_type_right", Item(Item::PopType)),
     // Country Triggers
     (
         Scopes::Country.union(Scopes::Character).union(Scopes::Province),
